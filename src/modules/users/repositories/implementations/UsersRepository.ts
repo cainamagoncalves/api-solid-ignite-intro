@@ -19,7 +19,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   create({ name, email }: ICreateUserDTO): User {
-    const newUser = new User({
+    const user = new User();
+
+    Object.assign(user, {
       name,
       email,
       admin: false,
@@ -27,13 +29,15 @@ class UsersRepository implements IUsersRepository {
       updated_at: new Date(),
     });
 
-    this.users.push(newUser);
+    this.users.push(user);
 
-    return newUser;
+    return user;
   }
 
   findById(id: string): User | undefined {
-    // Complete aqui
+    const user = this.users.find((user) => user.id === id);
+
+    return user;
   }
 
   findByEmail(email: string): User | undefined {
@@ -43,11 +47,16 @@ class UsersRepository implements IUsersRepository {
   }
 
   turnAdmin(receivedUser: User): User {
-    // Complete aqui
+    const user = this.users.find((user) => user.name === receivedUser.name);
+
+    user.admin = true;
+    user.updated_at = new Date();
+
+    return user;
   }
 
   list(): User[] {
-    // Complete aqui
+    return this.users;
   }
 }
 

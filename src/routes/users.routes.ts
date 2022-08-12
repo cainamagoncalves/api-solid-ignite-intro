@@ -7,20 +7,36 @@ import { turnUserAdminController } from "../modules/users/useCases/turnUserAdmin
 
 const usersRoutes = Router();
 
-usersRoutes.post("/", (request, response) =>
-  createUserController.handle(request, response)
-);
+usersRoutes.post("/", (request, response) => {
+  try {
+    return createUserController.handle(request, response);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
 
-usersRoutes.patch("/:user_id/admin", (request, response) =>
-  turnUserAdminController.handle(request, response)
-);
+usersRoutes.patch("/:user_id/admin", (request, response) => {
+  try {
+    return turnUserAdminController.handle(request, response);
+  } catch (error) {
+    return response.status(404).json({ error: error.message });
+  }
+});
 
-usersRoutes.get("/:user_id", (request, response) =>
-  showUserProfileController.handle(request, response)
-);
+usersRoutes.get("/:user_id", (request, response) => {
+  try {
+    return showUserProfileController.handle(request, response);
+  } catch (error) {
+    return response.status(404).json({ error: error.message });
+  }
+});
 
-usersRoutes.get("/", (request, response) =>
-  listAllUsersController.handle(request, response)
-);
+usersRoutes.get("/", (request, response) => {
+  try {
+    return listAllUsersController.handle(request, response);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
 
 export { usersRoutes };
