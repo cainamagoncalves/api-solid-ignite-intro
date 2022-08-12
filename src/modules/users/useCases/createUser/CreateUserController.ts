@@ -10,7 +10,7 @@ class CreateUserController {
 
     const user = this.createUserUseCase.execute({ name, email });
 
-    return response.status(200).send({ user });
+    return response.status(201).send(user);
   }
 }
 
